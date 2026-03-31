@@ -1,8 +1,24 @@
+"use client";
+
 import Link from "next/link";
 import Button from "@/components/ui/Button";
 import AuthRedirectGuard from "@/components/auth/AuthRedirectGuard";
 
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { createClient } from "@/lib/supabase/client";
+
 export default function LandingPage() {
+  const router = useRouter();
+  const supabase = createClient();
+
+  useEffect(() => {
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      if (user) {
+        router.push("/home");
+      }
+    });
+  }, [router, supabase]);
   return (
     <div
       className="min-h-screen w-full mx-auto max-w-md md:max-w-2xl lg:max-w-3xl flex flex-col p-6 relative overflow-x-hidden"

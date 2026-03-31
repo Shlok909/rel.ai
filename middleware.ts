@@ -23,7 +23,6 @@ export async function middleware(request: NextRequest) {
 
   // Skip middleware entirely for public/onboarding routes
   const isPublicRoute =
-    pathname === '/' ||
     pathname.startsWith('/onboarding') ||
     pathname.startsWith('/auth') ||
     pathname.startsWith('/email-confirmed') ||
