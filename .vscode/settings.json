@@ -1,0 +1,12 @@
+{
+  "css.lint.unknownAtRules": "ignore",
+  "css.validate": false,
+  "scss.lint.unknownAtRules": "ignore",
+  "scss.validate": false,
+  "tailwindCSS.includeLanguages": {
+    "css": "css"
+  },
+  "css.customData": [
+    ".vscode/tailwind-data.json"
+  ]
+}

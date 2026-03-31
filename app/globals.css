@@ -1,0 +1,316 @@
+@import "tailwindcss";
+
+/* ============================================
+   REL.AI DESIGN SYSTEM — globals.css
+   Premium dark romantic UI
+   ============================================ */
+
+/* ---- DESIGN TOKENS & VARIABLE MAPPINGS ---- */
+:root {
+  /* Backgrounds */
+  --color-bg-base: #0c0c0f;
+  --color-bg-surface: #13131a;
+  --color-bg-elevated: #1a1a24;
+  --color-bg-overlay: #21212e;
+  --color-bg-hover: #252535;
+
+  /* Brand accent — muted rose-pink */
+  --color-accent: #e8729a;
+  --color-accent-soft: #d4608a;
+  --color-accent-dim: rgba(232, 114, 154, 0.12);
+  --color-accent-glow: rgba(232, 114, 154, 0.22);
+  --color-accent-border: rgba(232, 114, 154, 0.25);
+
+  /* Romantic Atmosphere - Deep Wine/Burgundy */
+  --color-romantic: #5c162e;
+  --color-romantic-glow: rgba(92, 22, 46, 0.18);
+
+  /* Text hierarchy - Brightened for maximum legibility */
+  --color-text-strong: #ffffff;
+  --color-text-body: #ffffff;       /* Pushed to white so opacity variants still pass WCAG */
+  --color-text-muted: #eae8f0;      /* Extremely bright grey */
+  --color-text-faint: #d4d0e0;      /* Moderately bright grey */
+
+  /* Borders */
+  --color-border-subtle: rgba(255, 255, 255, 0.06);
+  --color-border-soft: rgba(255, 255, 255, 0.10);
+  --color-border-medium: rgba(255, 255, 255, 0.16);
+  --color-border-accent: rgba(232, 114, 154, 0.30);
+
+  /* Semantic */
+  --color-success: #5ecea0;
+  --color-success-dim: rgba(94, 206, 160, 0.12);
+  --color-warning: #f4b860;
+  --color-warning-dim: rgba(244, 184, 96, 0.12);
+  --color-danger: #f47070;
+  --color-danger-dim: rgba(244, 112, 112, 0.12);
+
+  /* Locked / Pro */
+  --color-locked-bg: rgba(255, 255, 255, 0.03);
+  --color-locked-border: rgba(255, 255, 255, 0.06);
+  --color-locked-text: var(--color-text-faint);
+
+  /* Spacing scale */
+  --spacing-page: 20px;
+  --spacing-gap: 24px;
+  --spacing-section: 32px;
+
+  /* Radius */
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 18px;
+  --radius-xl: 22px;
+  --radius-full: 999px;
+
+  /* Font */
+  --font-sans: "Inter", system-ui, sans-serif;
+
+  /* ---- Shorthand aliases (used by inline styles) ---- */
+  --bg-base: var(--color-bg-base);
+  --bg-surface: var(--color-bg-surface);
+  --bg-elevated: var(--color-bg-elevated);
+  --bg-overlay: var(--color-bg-overlay);
+  --bg-hover: var(--color-bg-hover);
+
+  --accent: var(--color-accent);
+  --accent-soft: var(--color-accent-soft);
+  --accent-dim: var(--color-accent-dim);
+  --accent-glow: var(--color-accent-glow);
+  --accent-border: var(--color-accent-border);
+
+  --romantic: var(--color-romantic);
+  --romantic-glow: var(--color-romantic-glow);
+
+  --text-strong: var(--color-text-strong);
+  --text-body: var(--color-text-body);
+  --text-muted: var(--color-text-muted);
+  --text-faint: var(--color-text-faint);
+
+  --border-subtle: var(--color-border-subtle);
+  --border-soft: var(--color-border-soft);
+  --border-medium: var(--color-border-medium);
+  --border-accent: var(--color-border-accent);
+
+  --success: var(--color-success);
+  --warning: var(--color-warning);
+  --danger: var(--color-danger);
+  
+  --success-dim: var(--color-success-dim);
+  --warning-dim: var(--color-warning-dim);
+  --danger-dim: var(--color-danger-dim);
+}
+
+/* ---- BASE RESET & BODY ---- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  min-height: 100%;
+  background: var(--color-bg-base);
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100%;
+  background: var(--color-bg-base);
+  color: var(--color-text-body);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* ---- TYPOGRAPHY BASE ---- */
+h1, h2, h3, h4 {
+  color: var(--color-text-strong);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.025em;
+}
+
+h1 { font-size: 1.75rem; }
+h2 { font-size: 1.375rem; }
+h3 { font-size: 1.125rem; }
+h4 { font-size: 1rem; }
+
+p {
+  color: var(--color-text-body);
+  line-height: 1.6;
+}
+
+/* ---- CUSTOM UTILITY CLASSES ---- */
+@layer utilities {
+  /* === Cards === */
+  .card-surface {
+    background: var(--color-bg-surface);
+    border: 1px solid var(--color-border-subtle);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-page);
+  }
+
+  .card-elevated {
+    background: var(--color-bg-elevated);
+    border: 1px solid var(--color-border-soft);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-page);
+  }
+
+  .card-accent {
+    background: var(--color-accent-dim);
+    border: 1px solid var(--color-accent-border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-page);
+  }
+
+  .card-locked {
+    background: var(--color-locked-bg);
+    border: 1px solid var(--color-locked-border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-page);
+    opacity: 0.65;
+  }
+
+  .card-success {
+    background: var(--color-success-dim);
+    border: 1px solid rgba(94, 206, 160, 0.2);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-page);
+  }
+
+  .card-warning {
+    background: var(--color-warning-dim);
+    border: 1px solid rgba(244, 184, 96, 0.2);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-page);
+  }
+
+  .card-danger {
+    background: var(--color-danger-dim);
+    border: 1px solid rgba(244, 112, 112, 0.2);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-page);
+  }
+
+  /* === Buttons === */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    border-radius: var(--radius-full);
+    transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    border: none;
+    outline: none;
+    white-space: nowrap;
+    letter-spacing: -0.01em;
+    user-select: none;
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-soft) 100%);
+    color: #fff;
+    box-shadow: 0 4px 20px var(--color-accent-glow);
+  }
+  .btn-primary:hover { filter: brightness(1.08); transform: translateY(-1px); }
+  .btn-primary:active { transform: scale(0.96); filter: brightness(0.96); }
+
+  .btn-secondary {
+    background: var(--color-bg-elevated);
+    color: var(--color-text-body);
+    border: 1px solid var(--color-border-soft);
+  }
+  .btn-secondary:hover { background: var(--color-bg-overlay); border-color: var(--color-border-medium); }
+  .btn-secondary:active { transform: scale(0.96); }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--color-accent);
+    border: 1px solid var(--color-accent-border);
+  }
+  .btn-ghost:hover { background: var(--color-accent-dim); }
+  .btn-ghost:active { transform: scale(0.96); }
+
+  .btn-sm  { padding: 8px 16px;  font-size: 0.8125rem; min-height: 36px; }
+  .btn-md  { padding: 12px 22px; font-size: 0.9375rem; min-height: 48px; }
+  .btn-lg  { padding: 16px 28px; font-size: 1rem; width: 100%; min-height: 56px; }
+
+  /* === Typography & Labels === */
+  .label-section {
+    font-size: 11px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--color-text-muted);
+    margin-bottom: 1rem;
+    display: block;
+    opacity: 1;
+  }
+  .text-strong { color: var(--color-text-strong); font-weight: 600; }
+  .text-body   { color: var(--color-text-body);   }
+  .text-muted  { color: var(--color-text-muted);  }
+  .text-faint  { color: var(--color-text-faint);  }
+  .text-accent { color: var(--color-accent);      }
+
+  /* === Divider === */
+  .divider {
+    height: 1px;
+    background: var(--color-border-subtle);
+    width: 100%;
+    margin: var(--spacing-gap) 0;
+  }
+
+  /* === Input === */
+  .input-base {
+    width: 100%;
+    background: var(--color-bg-overlay);
+    border: 1px solid var(--color-border-soft);
+    border-radius: var(--radius-md);
+    color: var(--color-text-strong); /* Original bright white for typed text */
+    font-size: 1rem;
+    padding: 14px 18px;
+    outline: none;
+    transition: all 0.2s ease;
+    resize: none;
+  }
+  .input-base::placeholder { color: #706b80; /* Soft muted hint — visible but clearly not user text */ }
+  .input-base:focus { border-color: var(--color-accent); background: var(--color-bg-elevated); box-shadow: 0 0 0 4px var(--color-accent-dim); }
+
+  /* === Tap target === */
+  .tap-item {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 16px 20px;
+    background: var(--color-bg-surface);
+    border: 1px solid var(--color-border-subtle);
+    border-radius: var(--radius-md);
+    color: var(--color-text-strong);
+    font-size: 0.9375rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.1s ease;
+  }
+  .tap-item:hover  { background: var(--color-bg-elevated); border-color: var(--color-border-soft); }
+  .tap-item:active { transform: scale(0.98); background: var(--color-bg-overlay); }
+}
+
+/* ---- SCROLLBAR ---- */
+::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: var(--color-bg-hover);
+  border-radius: 2px;
+}
+
+/* ---- SELECTION ---- */
+::selection {
+  background: var(--color-accent-dim);
+  color: var(--color-text-strong);
+}
