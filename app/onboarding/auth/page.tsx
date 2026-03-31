@@ -114,13 +114,58 @@ export default function AuthPage() {
         });
       }
     } catch (err: any) {
-      if (err.message === "Invalid login credentials") {
-        setMessage({ text: "Invalid Credentials", type: "error" });
+      console.error("Auth error:", err);
+      
+      if (err.message?.toLowerCase().includes("invalid login credentials")) {
+        setMessage({ text: "Invalid email or password. Please try again.", type: "error" });
+      } else if (err.message?.toLowerCase().includes("email not confirmed")) {
+        setMessage({ 
+          text: "Email not confirmed. Please check your inbox or click below to resend the link.", 
+          type: "error" 
+        });
       } else {
         setMessage({ text: err.message, type: "error" });
       }
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleForgotPassword = async () => {
+    if (!email) {
+      setMessage({ text: "Please enter your email address first.", type: "error" });
+      return;
+    }
+    setLoading(true);
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: `${window.location.origin}/auth/reset-password`,
+    });
+    setLoading(false);
+    if (error) {
+      setMessage({ text: error.message, type: "error" });
+    } else {
+      setMessage({ text: "Password reset link sent! Check your email.", type: "success" });
+    }
+  };
+
+  const handleResendConfirmation = async () => {
+    if (!email) {
+      setMessage({ text: "Please enter your email address first.", type: "error" });
+      return;
+    }
+    setLoading(true);
+    const { error } = await supabase.auth.resend({
+      type: 'signup',
+      email: email,
+      options: {
+        emailRedirectTo: `${window.location.origin}/auth/confirm`,
+      }
+    });
+    setLoading(false);
+    if (error) {
+      setMessage({ text: error.message, type: "error" });
+    } else {
+      setMessage({ text: "Confirmation email resent! Check your inbox.", type: "success" });
     }
   };
 
@@ -179,12 +224,34 @@ export default function AuthPage() {
         </div>
 
         {message.text && (
-          <div className="p-3 rounded-lg text-sm font-medium" style={{ 
+          <div className="p-3 rounded-lg text-sm font-medium flex flex-col gap-2" style={{ 
             background: message.type === "error" ? "rgba(239,68,68,0.1)" : "rgba(34,197,94,0.1)", 
             color: message.type === "error" ? "#ef4444" : "#22c55e",
             border: `1px solid ${message.type === "error" ? "rgba(239,68,68,0.2)" : "rgba(34,197,94,0.2)"}` 
           }}>
-            {message.text}
+            <span>{message.text}</span>
+            {message.text.includes("Email not confirmed") && (
+              <button 
+                type="button"
+                onClick={handleResendConfirmation}
+                className="text-xs font-bold underline text-left"
+              >
+                Resend confirmation link
+              </button>
+            )}
+          </div>
+        )}
+
+        {isLogin && (
+          <div className="flex justify-end">
+            <button 
+              type="button"
+              onClick={handleForgotPassword}
+              className="text-xs font-semibold opacity-60 hover:opacity-100 transition-opacity"
+              style={{ color: "var(--text-strong)" }}
+            >
+              Forgot Password?
+            </button>
           </div>
         )}
 
