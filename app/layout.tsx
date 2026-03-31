@@ -7,6 +7,9 @@ export const metadata: Metadata = {
     "Rel.AI is a private, AI-powered relationship guidance app for Indian users. Understand messages, read signals, and navigate your love life with confidence.",
 };
 
+import { Suspense } from "react";
+import LoadingBar from "@/components/navigation/LoadingBar";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -23,6 +26,9 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-full flex flex-col antialiased" suppressHydrationWarning>
+        <Suspense fallback={null}>
+          <LoadingBar />
+        </Suspense>
         {children}
       </body>
     </html>
