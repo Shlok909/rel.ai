@@ -8,7 +8,9 @@ export async function GET(request: NextRequest) {
   const type = searchParams.get('type') as EmailOtpType | null
   const code = searchParams.get('code')
 
-  const redirectTo = request.nextUrl.clone()
+  // Dynamically determine the origin to avoid hardcoded localhost redirects
+  const origin = request.nextUrl.origin
+  const redirectTo = new URL('/email-confirmed', origin)
 
   // Handle PKCE flow (code parameter)
   if (code) {
