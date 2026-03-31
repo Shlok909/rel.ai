@@ -1,15 +1,26 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import PageContainer from "@/components/layout/PageContainer";
 import TopBar from "@/components/layout/TopBar";
 import Button from "@/components/ui/Button";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
-
 import { useSearchParams } from "next/navigation";
 
 export default function WaitlistPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex flex-col items-center justify-center p-6 text-center">
+        <div className="w-8 h-8 border-4 border-[var(--accent)] border-t-transparent rounded-full animate-spin"></div>
+      </div>
+    }>
+      <WaitlistContent />
+    </Suspense>
+  );
+}
+
+function WaitlistContent() {
   const supabase = createClient();
   const searchParams = useSearchParams();
   const [loading, setLoading] = useState(false);

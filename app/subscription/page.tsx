@@ -1,5 +1,6 @@
 "use client";
 
+import { Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import AppShell from "@/components/layout/AppShell";
 import PageContainer from "@/components/layout/PageContainer";
@@ -8,6 +9,20 @@ import Button from "@/components/ui/Button";
 import { cn } from "@/lib/utils/cn";
 
 export default function SubscriptionPage() {
+  return (
+    <Suspense fallback={
+      <AppShell>
+        <div className="flex items-center justify-center min-h-[60vh]">
+          <div className="w-8 h-8 border-4 border-[var(--accent)] border-t-transparent rounded-full animate-spin"></div>
+        </div>
+      </AppShell>
+    }>
+      <SubscriptionContent />
+    </Suspense>
+  );
+}
+
+function SubscriptionContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
 
@@ -87,7 +102,7 @@ export default function SubscriptionPage() {
             <div className="flex flex-col gap-3 mb-8">
                <FeatureItem icon="🔓" text="Understand & Reply (Limited)" />
                <FeatureItem icon="🔍" text="Read the Signals (Limited)" />
-               <FeatureItem icon="🔒" text="Pro Modules" available={false} locked />
+               <FeatureItem icon="🔒" text="Pro Modules" available={false} />
             </div>
 
             <Button variant="secondary" fullWidth className="py-4 text-sm font-black" onClick={() => handleSelectPlan("beginner", 0)}>
@@ -124,7 +139,7 @@ export default function SubscriptionPage() {
                <FeatureItem icon="✨" text="Everything in Beginner" highlight />
                <FeatureItem icon="🛡️" text="Relationship Stability" highlight />
                <FeatureItem icon="🔮" text="Advanced Analysis" />
-               <FeatureItem icon="🔒" text="Elite Modules" available={false} locked />
+               <FeatureItem icon="🔒" text="Elite Modules" available={false} />
             </div>
 
             <Button variant="primary" fullWidth className="py-4 text-sm font-black shadow-lg" onClick={() => handleSelectPlan("boost", 75)}>
@@ -186,7 +201,7 @@ export default function SubscriptionPage() {
   );
 }
 
-function FeatureItem({ text, icon, available = true, locked = false, highlight = false, highlightGold = false, label }: { text: string; icon?: string; available?: boolean; locked?: boolean; highlight?: boolean; highlightGold?: boolean; label?: string }) {
+function FeatureItem({ text, icon, available = true, highlight = false, highlightGold = false, label }: { text: string; icon?: string; available?: boolean; highlight?: boolean; highlightGold?: boolean; label?: string }) {
   return (
     <div className={cn(
       "flex items-center justify-between gap-3 p-3 rounded-xl transition-all",
