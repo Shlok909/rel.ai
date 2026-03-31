@@ -69,10 +69,13 @@ export default function AuthPage() {
     setLoading(true);
     setMessage({ text: "", type: "" });
 
+    // Sanitize email: lowercase and remove trailing spaces
+    const sanitizedEmail = email.trim().toLowerCase();
+
     try {
       if (isLogin) {
         const { error, data } = await supabase.auth.signInWithPassword({
-          email,
+          email: sanitizedEmail,
           password,
         });
         if (error) throw error;
@@ -100,7 +103,7 @@ export default function AuthPage() {
           return;
         }
         const { error } = await supabase.auth.signUp({
-          email,
+          email: sanitizedEmail,
           password,
           options: {
             data: { ...onboardingData, display_name: displayName },
@@ -117,9 +120,10 @@ export default function AuthPage() {
     } catch (err: any) {
       console.error("Auth error:", err);
       
-      if (err.message?.toLowerCase().includes("invalid login credentials")) {
-        setMessage({ text: "Invalid email or password. Please try again.", type: "error" });
-      } else if (err.message?.toLowerCase().includes("email not confirmed")) {
+      const errMsg = err.message?.toLowerCase() || "";
+      if (errMsg.includes("invalid login credentials")) {
+        setMessage({ text: "Invalid email or password. (Note: Email is case-sensitive, please check for typos)", type: "error" });
+      } else if (errMsg.includes("email not confirmed")) {
         setMessage({ 
           text: "Email not confirmed. Please check your inbox or click below to resend the link.", 
           type: "error" 
@@ -138,7 +142,8 @@ export default function AuthPage() {
       return;
     }
     setLoading(true);
-    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+    const sanitizedEmail = email.trim().toLowerCase();
+    const { error } = await supabase.auth.resetPasswordForEmail(sanitizedEmail, {
       redirectTo: `${window.location.origin}/auth/reset-password`,
     });
     setLoading(false);
@@ -155,9 +160,10 @@ export default function AuthPage() {
       return;
     }
     setLoading(true);
+    const sanitizedEmail = email.trim().toLowerCase();
     const { error } = await supabase.auth.resend({
       type: 'signup',
-      email: email,
+      email: sanitizedEmail,
       options: {
         emailRedirectTo: `${window.location.origin}/auth/confirm`,
       }
@@ -204,7 +210,7 @@ export default function AuthPage() {
             type="email"
             required
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => setEmail(e.target.value.trim().toLowerCase())}
             className="w-full p-4 rounded-xl text-sm transition-all focus:outline-none focus:ring-1 focus:ring-[var(--accent)]"
             style={{ background: "var(--bg-surface)", border: "1px solid var(--border-subtle)", color: "var(--text-strong)" }}
             placeholder="you@email.com"
